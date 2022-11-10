@@ -26,7 +26,7 @@ public:
         delete[] array;
     }
 
-    bool full() const {return size == max_size};
+    bool full() const { return size == max_size; }
 
     ~Vector()
     {
