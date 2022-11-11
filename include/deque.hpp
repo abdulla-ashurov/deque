@@ -37,14 +37,14 @@ public:
     size_t size() const { return size; }
     bool empty() const { return size == 0; }
 
-    void push_back(const T &value)
+    void push_back(const int &value)
     {
         if (head == nullptr)
             head = tail = new Node(value, nullptr, nullptr);
-        else if (!tail->array.full())
-            tail = tail->p_next = new Node(value, tail, nullptr);
+        else if (!tail->arr.full())
+            tail->arr.push_back(value);
         else
-            tail->array.push_back(value);
+            tail = tail->p_next = new Node(value, tail, nullptr);
 
         size++;
     }
