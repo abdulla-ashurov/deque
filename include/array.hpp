@@ -11,7 +11,7 @@ public:
     Array() : array{new int[max_size]}, size{0} {}
 
     bool full() const { return size == max_size; }
-    
+
     size_t get_size() const { return size; }
 
     void push_back(const int &value)
