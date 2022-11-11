@@ -28,7 +28,7 @@ public:
     int &operator[](const size_t index)
     {
         if (index >= size)
-            throw std::invalid_argument("invalid index");
+            throw std::out_of_range("index out of range");
 
         return array[index];
     }
