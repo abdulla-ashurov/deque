@@ -1,29 +1,24 @@
 #ifndef DEQUE_HPP
 #define DEQUE_HPP
 
-#include "vector.hpp"
+#include "array.hpp"
 
-template <class T>
 class Deque
 {
     class Node
     {
-        const size_t max_size = 4;
-
     public:
-        Vector<T> v(max_size);
+        Array arr;
         Node *p_prev, *p_next;
 
-        Node(const T &value, const Node *p_prev, const Node *p_next)
+        Node(const int &value, Node *p_prev, Node *p_next)
+            : p_prev{p_prev}, p_next{p_next}
         {
-            v.push_back(value);
-            this->p_prev = p_prev;
-            this->p_next = p_next;
+            arr.push_back(value);
         }
 
         ~Node()
         {
-            v.~Vector();
             p_prev = p_next = nullptr;
         }
     };
