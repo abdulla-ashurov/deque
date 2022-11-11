@@ -34,7 +34,7 @@ class Deque
 public:
     Deque() : head(nullptr), tail(nullptr), size(0) {}
 
-    size_t size() const { return size; }
+    size_t get_size() const { return size; }
     bool empty() const { return size == 0; }
 
     void push_back(const int &value)
