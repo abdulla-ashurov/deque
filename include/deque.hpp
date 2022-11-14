@@ -26,6 +26,28 @@ class Deque
     Node *head, *tail;
     size_t size;
 
+    int &search_from_head(const size_t index)
+    {
+        Node *current = head;
+        for (size_t i = 0; i < size; i += current->arr.get_size(), current = current->p_next)
+            for (size_t j = 0; j < current->arr.get_size(); j++)
+                if (i + j == index)
+                    return current->arr[j];
+
+        throw std::invalid_argument("index not found");
+    }
+
+    int &search_from_tail(const size_t index)
+    {
+        Node *current = tail;
+        for (int i = size - 1; i >= 0; i -= current->arr.get_size(), current = current->p_prev)
+            for (int j = 0; j < current->arr.get_size(); j++)
+                if (i - j == index)
+                    return current->arr[current->arr.get_size() - 1 - j];
+
+        throw std::invalid_argument("index not found");
+    }
+
 public:
     Deque() : head(nullptr), tail(nullptr), size(0) {}
 
@@ -45,9 +67,12 @@ public:
         size++;
     }
 
-    ~Deque()
+    int &operator[](const size_t index)
     {
-        // clear();
+        if (index / Array::get_max_size() < size / Array::get_max_size())
+            return search_from_head(index);
+
+        return search_from_tail(index);
     }
 };
 
