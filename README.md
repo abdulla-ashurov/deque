@@ -23,6 +23,11 @@ Double Ended QUEue (deque) implementation using C++ programming language.
 - `operator[]` - access element
 - `at` - access element (if element is not exist then throwing an `out_of_range` exception)
 
+### Modifiers
+
+- `push_back` - add element at the end
+- `pop_back` -  delete last element
+
 ## To run unit tests
 
 1. Download [CMake](https://cmake.org/download/)
