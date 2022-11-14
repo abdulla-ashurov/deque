@@ -48,6 +48,11 @@ class Deque
         throw std::invalid_argument("index not found");
     }
 
+    bool is_faster_get_from_head(const size_t index)
+    {
+        return (index / Array::get_max_size()) < (size / Array::get_max_size());
+    }
+
 public:
     Deque() : head(nullptr), tail(nullptr), size(0) {}
 
@@ -85,7 +90,7 @@ public:
 
     int &operator[](const size_t index)
     {
-        if (index / Array::get_max_size() < size / Array::get_max_size())
+        if (is_faster_get_from_head(index))
             return search_from_head(index);
 
         return search_from_tail(index);
