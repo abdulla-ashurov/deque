@@ -14,6 +14,8 @@ public:
 
     size_t get_size() const { return size; }
 
+    static size_t get_max_size() { return max_size; }
+
     void push_back(const int &value)
     {
         if (full())
