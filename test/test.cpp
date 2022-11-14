@@ -1,20 +1,18 @@
 #include "catch_amalgamated.hpp"
 #include "../include/deque.hpp"
 
-#include <iostream>
-
 TEST_CASE("test deque.push_back function")
 {
     SECTION("should return expected value")
     {
-        Deque<int> deque;
+        Deque deque;
+        size_t expected_size = rand() % 10;
 
-        std::cout << "Size: " << deque.size() << std::endl;
-        deque.push_back(5);
-        deque.push_back(10);
-        deque.push_back(15);
-        deque.push_back(20);
-        std::cout << "Size: " << deque.size() << std::endl;
+        for (size_t i = 0; i < expected_size; i++)
+            deque.push_back(i + 1);
+
+        REQUIRE(deque.get_size() == expected_size);
+        for (size_t i = 0; i < expected_size; i++)
+            REQUIRE(deque[i] == i + 1);
     }
 }
-
