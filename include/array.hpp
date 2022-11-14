@@ -12,6 +12,8 @@ public:
 
     bool full() const { return size == max_size; }
 
+    bool empty() const { return size == 0; }
+
     size_t get_size() const { return size; }
 
     static size_t get_max_size() { return max_size; }
