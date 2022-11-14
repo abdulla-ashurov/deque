@@ -57,7 +57,7 @@ public:
 
     void push_back(const int &value)
     {
-        if (head == nullptr)
+        if (empty())
             head = tail = new Node(value, nullptr, nullptr);
         else if (!tail->arr.full())
             tail->arr.push_back(value);
