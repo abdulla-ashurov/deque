@@ -36,6 +36,13 @@ public:
         size--;
     }
 
+    void clear()
+    {
+        delete[] array;
+        array = nullptr;
+        size = 0;
+    }
+
     int &operator[](const size_t index)
     {
         if (index >= size)
@@ -44,7 +51,10 @@ public:
         return array[index];
     }
 
-    ~Array() { clear(); }
+    ~Array()
+    {
+        clear();
+    }
 };
 
 #endif
