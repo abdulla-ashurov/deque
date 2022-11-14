@@ -27,7 +27,14 @@ public:
         size++;
     }
 
-    void clear() { delete[] array; }
+    void pop_back()
+    {
+        if (empty())
+            throw std::runtime_error("array is empty");
+
+        array[size - 1] = 0;
+        size--;
+    }
 
     int &operator[](const size_t index)
     {
