@@ -67,6 +67,22 @@ public:
         size++;
     }
 
+    void pop_back()
+    {
+        if (empty())
+            throw std::runtime_error("deque is empty");
+        else if (tail->arr.get_size() > 1)
+            tail->arr.pop_back();
+        else
+        {
+            tail = tail->p_prev;
+            delete tail->p_next;
+            tail->p_next = nullptr;
+        }
+
+        size--;
+    }
+
     int &operator[](const size_t index)
     {
         if (index / Array::get_max_size() < size / Array::get_max_size())
