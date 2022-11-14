@@ -74,6 +74,16 @@ public:
 
         return search_from_tail(index);
     }
+
+    int &at(const size_t index)
+    {
+        if (index >= size)
+            throw std::out_of_range("index out of range");
+
+        return operator[](index);
+    }
+
+    ~Deque() {}
 };
 
 #endif
