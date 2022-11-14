@@ -36,4 +36,10 @@ TEST_CASE("test deque.pop_back function")
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == i + 1);
     }
+
+    SECTION("should return exception")
+    {
+        Deque<int> deque;
+        REQUIRE_THROWS(deque.pop_back());
+    }
 }
