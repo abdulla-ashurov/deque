@@ -1,14 +1,15 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+template<class T>
 class Array
 {
-    int *array;
+    T *array;
     size_t size;
     const static size_t max_size = 4;
 
 public:
-    Array() : array{new int[max_size]}, size{0} {}
+    Array() : array{new T[max_size]}, size{0} {}
 
     bool full() const { return size == max_size; }
 
@@ -18,7 +19,7 @@ public:
 
     static size_t get_max_size() { return max_size; }
 
-    void push_back(const int &value)
+    void push_back(const T &value)
     {
         if (full())
             throw std::overflow_error("array overflow");
@@ -43,7 +44,7 @@ public:
         size = 0;
     }
 
-    int &operator[](const size_t index)
+    T &operator[](const size_t index)
     {
         if (index >= size)
             throw std::out_of_range("index out of range");

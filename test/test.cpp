@@ -5,7 +5,7 @@ TEST_CASE("test deque.push_back function")
 {
     SECTION("should return expected value")
     {
-        Deque deque;
+        Deque<int> deque;
         size_t expected_size = 10;
 
         for (size_t i = 0; i < expected_size; i++)
@@ -21,7 +21,7 @@ TEST_CASE("test deque.pop_back function")
 {
     SECTION("should return expected value")
     {
-        Deque deque;
+        Deque<int> deque;
         size_t size = 10;
 
         for (size_t i = 0; i < size; i++)

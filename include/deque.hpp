@@ -3,15 +3,16 @@
 
 #include "array.hpp"
 
+template <class T>
 class Deque
 {
     class Node
     {
     public:
-        Array arr;
+        Array<T> arr;
         Node *p_prev, *p_next;
 
-        Node(const int &value, Node *p_prev, Node *p_next)
+        Node(const T &value, Node *p_prev, Node *p_next)
             : p_prev{p_prev}, p_next{p_next}
         {
             arr.push_back(value);
@@ -26,7 +27,7 @@ class Deque
     Node *head, *tail;
     size_t size;
 
-    int &search_from_head(const size_t index)
+    T &search_from_head(const size_t index)
     {
         Node *current = head;
         for (size_t i = 0; i < size; i += current->arr.get_size(), current = current->p_next)
@@ -37,7 +38,7 @@ class Deque
         throw std::invalid_argument("index not found");
     }
 
-    int &search_from_tail(const size_t index)
+    T &search_from_tail(const size_t index)
     {
         Node *current = tail;
         for (int i = size - 1; i >= 0; i -= current->arr.get_size(), current = current->p_prev)
@@ -50,7 +51,7 @@ class Deque
 
     bool is_faster_get_from_head(const size_t index)
     {
-        return (index / Array::get_max_size()) < (size / Array::get_max_size());
+        return (index / Array<T>::get_max_size()) < (size / Array<T>::get_max_size());
     }
 
 public:
@@ -60,7 +61,7 @@ public:
 
     bool empty() const { return size == 0; }
 
-    void push_back(const int &value)
+    void push_back(const T &value)
     {
         if (empty())
             head = tail = new Node(value, nullptr, nullptr);
@@ -88,7 +89,7 @@ public:
         size--;
     }
 
-    int &operator[](const size_t index)
+    T &operator[](const size_t index)
     {
         if (is_faster_get_from_head(index))
             return search_from_head(index);
@@ -96,7 +97,7 @@ public:
         return search_from_tail(index);
     }
 
-    int &at(const size_t index)
+    T &at(const size_t index)
     {
         if (index >= size)
             throw std::out_of_range("index out of range");
