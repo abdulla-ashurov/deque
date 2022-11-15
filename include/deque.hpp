@@ -93,9 +93,29 @@ public:
             tail->arr.pop_back();
         else
         {
-            tail = tail->p_prev;
-            delete tail->p_next;
+            Node *temp = tail->p_prev;
+            delete tail;
+
+            tail = temp;
             tail->p_next = nullptr;
+        }
+
+        size--;
+    }
+
+    void pop_front()
+    {
+        if (empty())
+            throw std::runtime_error("deque is empty");
+        else if (head->arr.get_size() > 1)
+            head->arr.pop_front();
+        else
+        {
+            Node *temp = head->p_next;
+            delete head;
+
+            head = temp;
+            head->p_prev = nullptr;
         }
 
         size--;
