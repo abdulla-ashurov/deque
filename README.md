@@ -26,6 +26,7 @@ Double Ended QUEue (deque) implementation using C++ programming language.
 ### Modifiers
 
 - `push_back` - add element at the end
+- `push_front` - add element at the front
 - `pop_back` -  delete last element
 
 ## To run unit tests
