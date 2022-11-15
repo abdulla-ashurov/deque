@@ -96,3 +96,30 @@ TEST_CASE("test deque.pop_back function")
         REQUIRE_THROWS(deque.pop_back());
     }
 }
+
+TEST_CASE("test deque.pop_front function")
+{
+    SECTION("should return expected values")
+    {
+        Deque<int> deque;
+        size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_front(i + 1);
+
+        for (size_t i = 0; i < 3; i++)
+            deque.pop_front();
+
+        size_t expected_size = 7;
+        
+        REQUIRE(deque.get_size() == expected_size);
+        for (size_t i = 0; i < expected_size; i++)
+            REQUIRE(deque[i] == expected_size - i);
+    }
+
+    SECTION("should return exception")
+    {
+        Deque<int> deque;
+        REQUIRE_THROWS(deque.pop_front());
+    }
+}
