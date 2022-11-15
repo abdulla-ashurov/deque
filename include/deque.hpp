@@ -61,6 +61,18 @@ public:
 
     bool empty() const { return size == 0; }
 
+    void push_front(const T &value)
+    {
+        if (empty())
+            head = tail = new Node(value, nullptr, nullptr);
+        else if (!head->arr.full())
+            head->arr.push_front(value);
+        else
+            head = head->p_prev = new Node(value, nullptr, head);
+
+        size++;
+    }
+
     void push_back(const T &value)
     {
         if (empty())
@@ -71,36 +83,6 @@ public:
             tail = tail->p_next = new Node(value, tail, nullptr);
 
         size++;
-    }
-
-    void push_front(const T &value)
-    {
-        if (empty())
-            head = tail = new Node(value, nullptr, nullptr);
-        else if (!head->arr.full())
-            head->arr.push_front(value);
-        else
-            head = head->p_prev = new Node(value, nullptr, head);
-        
-        size++;
-    }
-
-    void pop_back()
-    {
-        if (empty())
-            throw std::runtime_error("deque is empty");
-        else if (tail->arr.get_size() > 1)
-            tail->arr.pop_back();
-        else
-        {
-            Node *temp = tail->p_prev;
-            delete tail;
-
-            tail = temp;
-            tail->p_next = nullptr;
-        }
-
-        size--;
     }
 
     void pop_front()
@@ -116,6 +98,24 @@ public:
 
             head = temp;
             head->p_prev = nullptr;
+        }
+
+        size--;
+    }
+
+    void pop_back()
+    {
+        if (empty())
+            throw std::runtime_error("deque is empty");
+        else if (tail->arr.get_size() > 1)
+            tail->arr.pop_back();
+        else
+        {
+            Node *temp = tail->p_prev;
+            delete tail;
+
+            tail = temp;
+            tail->p_next = nullptr;
         }
 
         size--;

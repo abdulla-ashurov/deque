@@ -1,7 +1,7 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
-template<class T>
+template <class T>
 class Array
 {
     T *array;
@@ -19,6 +19,18 @@ public:
 
     static size_t get_max_size() { return max_size; }
 
+    void push_front(const T &value)
+    {
+        if (full())
+            throw std::overflow_error("array overflow");
+
+        for (int i = size - 1; i >= 0; i--)
+            array[i + 1] = array[i];
+
+        array[0] = value;
+        size++;
+    }
+
     void push_back(const T &value)
     {
         if (full())
@@ -28,16 +40,16 @@ public:
         size++;
     }
 
-    void push_front(const T &value)
+    void pop_front()
     {
-        if (full())
-            throw std::overflow_error("array overflow");
+        if (empty())
+            throw std::runtime_error("array is empty");
 
-        for (int i = size - 1; i >= 0; i--)
-            array[i + 1] = array[i];
-        
-        array[0] = value;
-        size++;
+        for (size_t i = 0; i < size - 1; i++)
+            array[i] = array[i + 1];
+
+        array[size - 1] = 0;
+        size--;
     }
 
     void pop_back()
@@ -45,18 +57,6 @@ public:
         if (empty())
             throw std::runtime_error("array is empty");
 
-        array[size - 1] = 0;
-        size--;
-    }
-
-    void pop_front()
-    {
-        if (empty())
-            throw std::runtime_error("array is empty");
-        
-        for (size_t i = 0; i < size - 1; i++)
-            array[i] = array[i + 1];
-        
         array[size - 1] = 0;
         size--;
     }
