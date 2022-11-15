@@ -49,6 +49,18 @@ public:
         size--;
     }
 
+    void pop_front()
+    {
+        if (empty())
+            throw std::runtime_error("array is empty");
+        
+        for (size_t i = 0; i < size - 1; i++)
+            array[i] = array[i + 1];
+        
+        array[size - 1] = 0;
+        size--;
+    }
+
     void clear()
     {
         delete[] array;
