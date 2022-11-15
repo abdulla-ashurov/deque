@@ -73,6 +73,18 @@ public:
         size++;
     }
 
+    void push_front(const T &value)
+    {
+        if (empty())
+            head = tail = new Node(value, nullptr, nullptr);
+        else if (!head->arr.full())
+            head->arr.push_front(value);
+        else
+            head = head->p_prev = new Node(value, nullptr, head);
+        
+        size++;
+    }
+
     void pop_back()
     {
         if (empty())
