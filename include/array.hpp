@@ -28,6 +28,18 @@ public:
         size++;
     }
 
+    void push_front(const T &value)
+    {
+        if (full())
+            throw std::overflow_error("array overflow");
+
+        for (int i = size - 1; i >= 0; i--)
+            array[i + 1] = array[i];
+        
+        array[0] = value;
+        size++;
+    }
+
     void pop_back()
     {
         if (empty())
