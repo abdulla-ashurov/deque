@@ -15,7 +15,7 @@ TEST_CASE("test array.push_front function")
         for (size_t i = 0; i < expected_size; i++)
             array.push_front(i + 1);
         
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_size - i);
     }
@@ -28,7 +28,7 @@ TEST_CASE("test array.push_front function")
         for (size_t i = 0; i < expected_size; i++)
             array.push_front(i + 1);
 
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
 
         // we cannot add element, because array is full
         REQUIRE_THROWS(array.push_front(rand()));
@@ -45,7 +45,7 @@ TEST_CASE("test array.push_back function")
         for (size_t i = 0; i < expected_size; i++)
             array.push_back(i + 1);
         
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == i + 1);
     }
@@ -58,7 +58,7 @@ TEST_CASE("test array.push_back function")
         for (size_t i = 0; i < expected_size; i++)
             array.push_back(i + 1);
 
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
 
         // we cannot add element, because array is full
         REQUIRE_THROWS(array.push_back(rand()));
@@ -73,14 +73,14 @@ TEST_CASE("test array.pop_front function")
         for (size_t i = 0; i < array.get_max_size(); i++)
             array.push_front(i + 1);
         
-        REQUIRE(array.get_size() == array.get_max_size());
+        REQUIRE(array.size() == array.get_max_size());
         
         for (size_t i = 0; i < 2; i++)
             array.pop_front();
         
         size_t expected_size = 2;
 
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_size - i);
     }
@@ -102,14 +102,14 @@ TEST_CASE("test array.pop_back function")
         for (size_t i = 0; i < array.get_max_size(); i++)
             array.push_back(i + 1);
         
-        REQUIRE(array.get_size() == array.get_max_size());
+        REQUIRE(array.size() == array.get_max_size());
         
         for (size_t i = 0; i < 2; i++)
             array.pop_back();
         
         size_t expected_size = 2;
 
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == i + 1);
     }
@@ -134,7 +134,7 @@ TEST_CASE("test array.clear function")
         size_t expected_size = 0;
         array.clear();
         
-        REQUIRE(array.get_size() == expected_size);
+        REQUIRE(array.size() == expected_size);
     }
 }
 

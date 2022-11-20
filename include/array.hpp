@@ -4,18 +4,20 @@
 template <class T>
 class Array
 {
+private:
     T *array;
-    size_t size;
+    size_t _size;
     const static size_t max_size = 4;
 
 public:
-    Array() : array{new T[max_size]}, size{0} {}
+    Array() : array{new T[max_size]}, _size{0} {}
+    Array(const Array &other) = delete;
 
-    bool full() const { return size == max_size; }
+    bool full() const { return _size == max_size; }
 
-    bool empty() const { return size == 0; }
+    bool empty() const { return _size == 0; }
 
-    size_t get_size() const { return size; }
+    size_t size() const { return _size; }
 
     static size_t get_max_size() { return max_size; }
 
@@ -24,11 +26,11 @@ public:
         if (full())
             throw std::overflow_error("array overflow");
 
-        for (int i = size - 1; i >= 0; i--)
+        for (int i = _size - 1; i >= 0; i--)
             array[i + 1] = array[i];
 
         array[0] = value;
-        size++;
+        _size++;
     }
 
     void push_back(const T &value)
@@ -36,8 +38,8 @@ public:
         if (full())
             throw std::overflow_error("array overflow");
 
-        array[size] = value;
-        size++;
+        array[_size] = value;
+        _size++;
     }
 
     void pop_front()
@@ -45,11 +47,11 @@ public:
         if (empty())
             throw std::runtime_error("array is empty");
 
-        for (size_t i = 0; i < size - 1; i++)
+        for (size_t i = 0; i < _size - 1; i++)
             array[i] = array[i + 1];
 
-        array[size - 1] = 0;
-        size--;
+        array[_size - 1] = 0;
+        _size--;
     }
 
     void pop_back()
@@ -57,20 +59,22 @@ public:
         if (empty())
             throw std::runtime_error("array is empty");
 
-        array[size - 1] = 0;
-        size--;
+        array[_size - 1] = 0;
+        _size--;
     }
 
     void clear()
     {
         delete[] array;
         array = nullptr;
-        size = 0;
+        _size = 0;
     }
+
+    Array& operator=(const Array &other) = delete;
 
     T &operator[](const size_t index)
     {
-        if (index >= size)
+        if (index >= _size)
             throw std::out_of_range("index out of range");
 
         return array[index];
