@@ -29,9 +29,8 @@ private:
     {
         Node *current = head;
         for (size_t i = 0; i < _size; i += current->arr.size(), current = current->p_next)
-            for (size_t j = 0; j < current->arr.size(); j++)
-                if (i + j == index)
-                    return current->arr[j];
+            if (index >= i && index < i + current->arr.size())
+                return current->arr[index - i];
 
         throw std::invalid_argument("index not found");
     }
@@ -40,9 +39,8 @@ private:
     {
         Node *current = tail;
         for (int i = _size - 1; i >= 0; i -= current->arr.size(), current = current->p_prev)
-            for (int j = 0; j < current->arr.size(); j++)
-                if (i - j == index)
-                    return current->arr[current->arr.size() - 1 - j];
+            if (index <= i && index > i - current->arr.size())
+                return current->arr[index - (i - current->arr.size()) - 1];
 
         throw std::invalid_argument("index not found");
     }
