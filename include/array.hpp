@@ -1,6 +1,10 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+#include <cassert>
+
+#define assert_m(exp, msg) assert(((void)msg, exp))
+
 template <class T>
 class Array
 {
@@ -23,8 +27,7 @@ public:
 
     void push_front(const T &value)
     {
-        if (full())
-            throw std::overflow_error("array overflow");
+        assert_m(!full(), "array overflow");
 
         for (int i = _size - 1; i >= 0; i--)
             array[i + 1] = array[i];
@@ -35,8 +38,7 @@ public:
 
     void push_back(const T &value)
     {
-        if (full())
-            throw std::overflow_error("array overflow");
+        assert_m(!full(), "array overflow");
 
         array[_size] = value;
         _size++;
@@ -44,8 +46,7 @@ public:
 
     void pop_front()
     {
-        if (empty())
-            throw std::runtime_error("array is empty");
+        assert_m(!empty(), "array is empty");
 
         for (size_t i = 0; i < _size - 1; i++)
             array[i] = array[i + 1];
@@ -56,8 +57,7 @@ public:
 
     void pop_back()
     {
-        if (empty())
-            throw std::runtime_error("array is empty");
+        assert_m(!empty(), "array is empty");
 
         array[_size - 1] = 0;
         _size--;
@@ -74,9 +74,8 @@ public:
 
     T &operator[](const size_t index)
     {
-        if (index >= _size)
-            throw std::out_of_range("index out of range");
-
+        assert_m(index < _size, "index out of range");
+        
         return array[index];
     }
 
