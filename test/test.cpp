@@ -20,19 +20,19 @@ TEST_CASE("test array.push_front function")
             REQUIRE(array[i] == expected_size - i);
     }
 
-    SECTION("should return exception")
-    {
-        Array<int> array;
-        size_t expected_size = array.get_max_size();
+    // SECTION("should return exception")
+    // {
+    //     Array<int> array;
+    //     size_t expected_size = array.get_max_size();
 
-        for (size_t i = 0; i < expected_size; i++)
-            array.push_front(i + 1);
+    //     for (size_t i = 0; i < expected_size; i++)
+    //         array.push_front(i + 1);
 
-        REQUIRE(array.size() == expected_size);
+    //     REQUIRE(array.size() == expected_size);
 
-        // we cannot add element, because array is full
-        REQUIRE_THROWS(array.push_front(rand()));
-    }
+    //     // we cannot add element, because array is full
+    //     REQUIRE_THROWS(array.push_front(rand()));
+    // }
 }
 
 TEST_CASE("test array.push_back function")
@@ -50,19 +50,19 @@ TEST_CASE("test array.push_back function")
             REQUIRE(array[i] == i + 1);
     }
 
-    SECTION("should return exception")
-    {
-        Array<int> array;
-        size_t expected_size = array.get_max_size();
+    // SECTION("should return exception")
+    // {
+    //     Array<int> array;
+    //     size_t expected_size = array.get_max_size();
 
-        for (size_t i = 0; i < expected_size; i++)
-            array.push_back(i + 1);
+    //     for (size_t i = 0; i < expected_size; i++)
+    //         array.push_back(i + 1);
 
-        REQUIRE(array.size() == expected_size);
+    //     REQUIRE(array.size() == expected_size);
 
-        // we cannot add element, because array is full
-        REQUIRE_THROWS(array.push_back(rand()));
-    }
+    //     // we cannot add element, because array is full
+    //     REQUIRE_THROWS(array.push_back(rand()));
+    // }
 }
 
 TEST_CASE("test array.pop_front function")
@@ -85,13 +85,13 @@ TEST_CASE("test array.pop_front function")
             REQUIRE(array[i] == expected_size - i);
     }
 
-    SECTION("should return exception")
-    {
-        Array<int> array;
+    // SECTION("should return exception")
+    // {
+    //     Array<int> array;
 
-        // we cannot pop_front array, because is empty
-        REQUIRE_THROWS(array.pop_front());
-    }
+    //     // we cannot pop_front array, because is empty
+    //     REQUIRE_THROWS(array.pop_front());
+    // }
 }
 
 TEST_CASE("test array.pop_back function")
@@ -114,13 +114,13 @@ TEST_CASE("test array.pop_back function")
             REQUIRE(array[i] == i + 1);
     }
 
-    SECTION("should return exception")
-    {
-        Array<int> array;
+    // SECTION("should return exception")
+    // {
+    //     Array<int> array;
 
-        // we cannot pop_back array, because is empty
-        REQUIRE_THROWS(array.pop_back());
-    }
+    //     // we cannot pop_back array, because is empty
+    //     REQUIRE_THROWS(array.pop_back());
+    // }
 }
 
 TEST_CASE("test array.clear function")
