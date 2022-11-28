@@ -6,115 +6,71 @@
 template <class T>
 class Deque
 {
-private:
-    class Node
-    {
-    public:
-        Array<T> arr;
-        Node *p_prev, *p_next;
-
-        Node(const T &value, Node *p_prev, Node *p_next)
-            : p_prev{p_prev}, p_next{p_next}
-        {
-            arr.push_back(value);
-        }
-
-        ~Node(){}
-    };
-
-    Node *head, *tail;
-    size_t _size;
-
-    T &search_from_head(const size_t index) const
-    {
-        Node *current = head;
-        for (size_t i = 0; i < _size; i += current->arr.size(), current = current->p_next)
-            if (index >= i && index < i + current->arr.size())
-                return current->arr[index - i];
-
-        throw std::invalid_argument("index not found");
-    }
-
-    T &search_from_tail(const size_t index) const
-    {
-        Node *current = tail;
-        for (int i = _size - 1; i >= 0; i -= current->arr.size(), current = current->p_prev)
-            if (index <= i && index > i - current->arr.size())
-                return current->arr[index - (i - current->arr.size()) - 1];
-
-        throw std::invalid_argument("index not found");
-    }
-
-    bool is_faster_get_from_head(const size_t index) const
-    {
-        return (index / Array<T>::get_max_size()) < (_size / Array<T>::get_max_size());
-    }
-
 public:
-    Deque() : head(nullptr), tail(nullptr), _size(0) {}
+    Deque() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
 
-    size_t get_size() const { return _size; }
+    size_t get_size() const { return m_size; }
 
-    bool empty() const { return _size == 0; }
+    bool empty() const { return m_size == 0; }
 
     void push_front(const T &value)
     {
         if (empty())
-            head = tail = new Node(value, nullptr, nullptr);
-        else if (!head->arr.full())
-            head->arr.push_front(value);
+            m_head = m_tail = new Node(value, nullptr, nullptr);
+        else if (!m_head->arr.full())
+            m_head->arr.push_front(value);
         else
-            head = head->p_prev = new Node(value, nullptr, head);
+            m_head = m_head->p_prev = new Node(value, nullptr, m_head);
 
-        _size++;
+        m_size++;
     }
 
     void push_back(const T &value)
     {
         if (empty())
-            head = tail = new Node(value, nullptr, nullptr);
-        else if (!tail->arr.full())
-            tail->arr.push_back(value);
+            m_head = m_tail = new Node(value, nullptr, nullptr);
+        else if (!m_tail->arr.full())
+            m_tail->arr.push_back(value);
         else
-            tail = tail->p_next = new Node(value, tail, nullptr);
+            m_tail = m_tail->p_next = new Node(value, m_tail, nullptr);
 
-        _size++;
+        m_size++;
     }
 
     void pop_front()
     {
         if (empty())
             throw std::runtime_error("deque is empty");
-        else if (head->arr.size() > 1)
-            head->arr.pop_front();
+        else if (m_head->arr.size() > 1)
+            m_head->arr.pop_front();
         else
         {
-            Node *temp = head->p_next;
-            delete head;
+            Node *temp = m_head->p_next;
+            delete m_head;
 
-            head = temp;
-            head->p_prev = nullptr;
+            m_head = temp;
+            m_head->p_prev = nullptr;
         }
 
-        _size--;
+        m_size--;
     }
 
     void pop_back()
     {
         if (empty())
             throw std::runtime_error("deque is empty");
-        else if (tail->arr.size() > 1)
-            tail->arr.pop_back();
+        else if (m_tail->arr.size() > 1)
+            m_tail->arr.pop_back();
         else
         {
-            Node *temp = tail->p_prev;
-            delete tail;
+            Node *temp = m_tail->p_prev;
+            delete m_tail;
 
-            tail = temp;
-            tail->p_next = nullptr;
+            m_tail = temp;
+            m_tail->p_next = nullptr;
         }
 
-        _size--;
+        m_size--;
     }
 
     T &operator[](const size_t index)
@@ -135,7 +91,7 @@ public:
 
     T &at(const size_t index)
     {
-        if (index >= _size)
+        if (index >= m_size)
             throw std::out_of_range("index out of range");
 
         return operator[](index);
@@ -143,13 +99,57 @@ public:
 
     const T &at(size_t index) const
     {
-        if (index >= _size)
+        if (index >= m_size)
             throw std::out_of_range("index out of range");
 
         return operator[](index);
     }
 
     ~Deque() {}
+
+private:
+    T &search_from_head(const size_t index) const
+    {
+        Node *current = m_head;
+        for (size_t i = 0; i < m_size; i += current->arr.size(), current = current->p_next)
+            if (index >= i && index < i + current->arr.size())
+                return current->arr[index - i];
+
+        throw std::invalid_argument("index not found");
+    }
+
+    T &search_from_tail(const size_t index) const
+    {
+        Node *current = m_tail;
+        for (int i = m_size - 1; i >= 0; i -= current->arr.size(), current = current->p_prev)
+            if (index <= i && index > i - current->arr.size())
+                return current->arr[index - (i - current->arr.size()) - 1];
+
+        throw std::invalid_argument("index not found");
+    }
+
+    bool is_faster_get_from_head(const size_t index) const
+    {
+        return (index / Array<T>::get_max_size()) < (m_size / Array<T>::get_max_size());
+    }
+
+    class Node
+    {
+    public:
+        Array<T> arr;
+        Node *p_prev, *p_next;
+
+        Node(const T &value, Node *p_prev, Node *p_next)
+            : p_prev{p_prev}, p_next{p_next}
+        {
+            arr.push_back(value);
+        }
+
+        ~Node() {}
+    };
+
+    Node *m_head, *m_tail;
+    size_t m_size;
 };
 
 #endif
