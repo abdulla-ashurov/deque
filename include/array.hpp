@@ -8,11 +8,6 @@
 template <class T>
 class Array
 {
-private:
-    T *array;
-    size_t _size;
-    const static size_t max_size = 4;
-
 public:
     Array() : array{new T[max_size]}, _size{0} {}
     Array(const Array &other) = delete;
@@ -83,6 +78,11 @@ public:
     {
         clear();
     }
+
+private:
+    T *array;
+    size_t _size;
+    const static size_t max_size = 4;
 };
 
 #endif
