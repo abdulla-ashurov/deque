@@ -25,7 +25,7 @@ public:
         assert_m(full(), "array overflow");
 
         for (int i = _size - 1; i >= 0; i--)
-            array[i + 1] = array[i];
+            std::swap(array[i], array[i + 1]);
 
         array[0] = value;
         _size++;
@@ -44,7 +44,7 @@ public:
         assert_m(empty(), "array is empty");
 
         for (size_t i = 0; i < _size - 1; i++)
-            array[i] = array[i + 1];
+            std::swap(array[i], array[i + 1]);
 
         array[_size - 1] = T();
         _size--;
