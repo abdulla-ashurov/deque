@@ -15,7 +15,7 @@ Double Ended QUEue (deque) implementation using C++ programming language.
 
 ### Capacity
 
-- `get_size` - get size of deque container
+- `size` - get size of deque container
 - `empty` - test whether container is empty
 
 ### Element access

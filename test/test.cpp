@@ -218,7 +218,7 @@ TEST_CASE("test deque.push_front function")
         for (size_t i = 0; i < expected_size; i++)
             deque.push_front(i + 1);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_size - i);
     }
@@ -234,7 +234,7 @@ TEST_CASE("test deque.push_front function")
         for (size_t i = 0; i < expected_size; i++)
             deque.push_front(expected_values[i]);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[expected_size - i - 1]);
     }
@@ -250,7 +250,7 @@ TEST_CASE("test deque.push_back function")
         for (size_t i = 0; i < expected_size; i++)
             deque.push_back(i + 1);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == i + 1);
     }
@@ -266,7 +266,7 @@ TEST_CASE("test deque.push_back function")
         for (size_t i = 0; i < expected_size; i++)
             deque.push_back(expected_values[i]);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[i]);
     }
@@ -286,7 +286,7 @@ TEST_CASE("test deque.push_back and push_front functions")
         for (size_t i = 0; i < expected_size / 2; i++)
             deque.push_front(expected_size - i);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[i]);
     }
@@ -303,7 +303,7 @@ TEST_CASE("test deque.push_back and push_front functions")
         for (size_t i = 0; i < expected_size / 2; i++)
             deque.push_back(expected_size - i);
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[i]);
     }
@@ -331,7 +331,7 @@ TEST_CASE("test deque.push_back and push_front functions")
             expected_values.push_front(str);
         }
         
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         std::list<std::string>::const_iterator it = expected_values.cbegin();
         for (size_t i = 0; i < expected_size || it != expected_values.cend(); i++, it++)
             REQUIRE(deque[i] == *it);
@@ -361,7 +361,7 @@ TEST_CASE("test deque.push_back and push_front functions")
             expected_values.push_back(str);
         }
         
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         std::list<std::string>::const_iterator it = expected_values.cbegin();
         for (size_t i = 0; i < expected_size || it != expected_values.cend(); i++, it++)
             REQUIRE(deque[i] == *it);
@@ -384,7 +384,7 @@ TEST_CASE("test deque.pop_front function")
 
         size_t expected_size = size - count_of_rm_elements;
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_size - i);
     }
@@ -406,7 +406,7 @@ TEST_CASE("test deque.pop_front function")
         
         size_t expected_size = size - count_of_rm_elements;
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[size - i - count_of_rm_elements - 1]);
     }
@@ -440,7 +440,7 @@ TEST_CASE("test deque.pop_back function")
 
         size_t expected_size = size - count_of_rm_elements;
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == i + 1);
     }
@@ -462,7 +462,7 @@ TEST_CASE("test deque.pop_back function")
         
         size_t expected_size = size - count_of_rm_elements;
 
-        REQUIRE(deque.get_size() == expected_size);
+        REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[i]);
     }

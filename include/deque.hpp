@@ -9,7 +9,7 @@ class Deque
 public:
     Deque() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
 
-    size_t get_size() const { return m_size; }
+    size_t size() const { return m_size; }
 
     bool empty() const { return m_size == 0; }
 
