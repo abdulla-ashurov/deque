@@ -324,7 +324,7 @@ TEST_CASE("test array.erase function")
         for (size_t i = 0; i < size; i++)
             array.push_back(i + 1);
         
-        for (size_t i = 0; i < array.size(); i++)
+        for (size_t i = 0; i < size; i++)
             array.erase(0);
 
         REQUIRE(array.empty());
@@ -338,7 +338,7 @@ TEST_CASE("test array.erase function")
         for (size_t i = 0; i < size; i++)
             array.push_back(i + 1);
         
-        for (size_t i = 0; i < array.size(); i++)
+        for (size_t i = 0; i < size; i++)
             array.erase(array.size() - 1);
 
         REQUIRE(array.empty());
@@ -846,5 +846,62 @@ TEST_CASE("test deque.insert function")
         size_t incorrect_pos = 3;
 
         REQUIRE_THROWS(deque.insert(incorrect_pos, gen_random_str(10)));
+    }
+}
+
+TEST_CASE("test deque.erase function")
+{
+    SECTION("erase all values from begin of deque")
+    {
+        Deque<int> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(i + 1);
+
+        for (size_t i = 0; i < size; i++)
+            deque.erase(0);
+        
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("erase all values from end of deque")
+    {
+        Deque<int> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(i + 1);
+
+        for (size_t i = 0; i < size; i++)
+            deque.erase(deque.size() - 1);
+        
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("erase values from middle of deque")
+    {
+        Deque<int> deque;
+        const size_t size = 10;
+
+        std::deque<int> expected_values;
+
+        for (size_t i = 0; i < size; i++)
+        {
+            deque.push_back(i + 1);
+            expected_values.push_back(i + 1);
+        }
+
+        size_t middle_pos = deque.size() / 2 - 1;
+
+        for (size_t i = 0; i < size / 2; i++)
+        {
+            deque.erase(middle_pos);
+            expected_values.erase(expected_values.begin() + middle_pos);
+        }
+
+        REQUIRE(deque.size() == expected_values.size());
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
     }
 }
