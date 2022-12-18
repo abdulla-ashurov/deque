@@ -1,5 +1,6 @@
 #include <string>
 #include <list>
+#include <deque>
 #include "catch_amalgamated.hpp"
 #include "../include/deque.hpp"
 
@@ -477,5 +478,150 @@ TEST_CASE("test deque.pop_back function")
     {
         Deque<std::string> deque;
         REQUIRE_THROWS(deque.pop_back());
+    }
+}
+
+TEST_CASE("test deque.insert function")
+{
+    SECTION("insert values to begin of deque")
+    {
+        Deque<int> deque;
+
+        size_t expected_size = 10;
+        std::deque<int> expected_values;
+
+        for (size_t i = 0; i < expected_size; i++)
+        {
+            int value = rand() % 10;
+
+            deque.insert(0, value);
+            expected_values.insert(expected_values.begin(), value);
+        }
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
+    }
+
+    SECTION("insert values to begin of deque")
+    {
+        Deque<std::string> deque;
+
+        size_t expected_size = 10;
+        std::string expected_values[expected_size];
+        init_str_array(expected_values, expected_size);
+
+        for (size_t i = 0; i < expected_size; i++)
+            deque.insert(0, expected_values[i]);
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[expected_size - i - 1]);
+    }
+
+    SECTION("insert values to end of deque")
+    {
+        Deque<int> deque;
+
+        size_t expected_size = 10;
+        std::deque<int> expected_values;
+
+        for (size_t pos = 0; pos < expected_size; pos++)
+        {
+            int value = rand() % 10;
+
+            deque.insert(pos, value);
+            expected_values.insert(expected_values.end(), value);
+        }
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
+    }
+
+    SECTION("insert values to end of deque")
+    {
+        Deque<std::string> deque;
+
+        size_t expected_size = 10;
+        std::string expected_values[expected_size];
+        init_str_array(expected_values, expected_size);
+
+       for (size_t pos = 0; pos < expected_size; pos++)
+            deque.insert(pos, expected_values[pos]);
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
+    }
+
+    SECTION("insert values to middle of deque")
+    {
+        Deque<int> deque;
+
+        size_t expected_size = 10;
+        std::deque<int> expected_values;
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            int value = rand() % 40;
+
+            deque.push_back(value);
+            expected_values.push_back(value);
+        }
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            int value = rand() % 40;
+            std::deque<int>::const_iterator pos = expected_values.begin() + 5;
+
+            deque.insert(expected_size / 2, value);
+            expected_values.insert(pos, value);
+        }
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
+    }
+
+    SECTION("insert values to middle of deque")
+    {
+        Deque<std::string> deque;
+
+        size_t expected_size = 10;
+        std::deque<std::string> expected_values;
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            std::string value(gen_random_str(10));
+
+            deque.push_back(value);
+            expected_values.push_back(value);
+        }
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            std::string value(gen_random_str(10));
+            std::deque<std::string>::const_iterator pos = expected_values.begin() + 5;
+
+            deque.insert(expected_size / 2, value);
+            expected_values.insert(pos, value);
+        }
+    }
+
+    SECTION("should return exception")
+    {
+        Deque<int> deque;
+        size_t incorrect_pos = 3, value = 5;
+        
+        REQUIRE_THROWS(deque.insert(incorrect_pos, value));
+    }
+
+    SECTION("should return exception")
+    {
+        Deque<std::string> deque;
+        size_t incorrect_pos = 3;
+        
+        REQUIRE_THROWS(deque.insert(incorrect_pos, gen_random_str(10)));
     }
 }
