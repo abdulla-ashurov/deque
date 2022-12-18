@@ -49,7 +49,8 @@ public:
             delete m_head;
 
             m_head = temp;
-            m_head->p_prev = nullptr;
+            if (m_head != nullptr)
+                m_head->p_prev = nullptr;
         }
 
         m_size--;
@@ -67,7 +68,8 @@ public:
             delete m_tail;
 
             m_tail = temp;
-            m_tail->p_next = nullptr;
+            if (m_tail != nullptr)
+                m_tail->p_next = nullptr;
         }
 
         m_size--;
@@ -102,6 +104,32 @@ public:
             }
 
             m_size++;
+        }
+    }
+
+    void erase(const size_t pos)
+    {
+        if (pos == 0)
+            pop_front();
+        else if (pos == m_size - 1)
+            pop_back();
+        else
+        {
+            Node *current = reach_node(pos);
+            if (current == nullptr)
+                throw std::runtime_error("invalid position for erasing value");
+            else if(current->arr.size() > 1)
+                current->arr.erase(pos % Array<T>::get_max_size());
+            else
+            {
+                Node *p_prev = current->p_prev, *p_next = current->p_next;
+                p_prev->p_next = p_next;
+                p_next->p_prev = p_prev;
+
+                delete current;
+            }
+
+            m_size--;
         }
     }
 
