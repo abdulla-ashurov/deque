@@ -1013,3 +1013,30 @@ TEST_CASE("test deque.erase function")
             REQUIRE(deque[i] == expected_values[i]);
     }
 }
+
+TEST_CASE("test deque.clear function")
+{
+    SECTION("should be empty")
+    {
+        Deque<int> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(i + 1);
+        
+        deque.clear();
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("should be empty")
+    {
+        Deque<std::string> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(gen_random_str(10));
+        
+        deque.clear();
+        REQUIRE(deque.empty());
+    }
+}

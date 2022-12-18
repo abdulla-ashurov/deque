@@ -133,6 +133,12 @@ public:
         }
     }
 
+    void clear()
+    {
+        for (int i = m_size - 1; i >= 0; i--)
+            pop_back();
+    }
+
     T &operator[](const size_t index)
     {
         if (is_faster_get_from_head(index))
@@ -165,7 +171,7 @@ public:
         return operator[](index);
     }
 
-    ~Deque() {}
+    ~Deque() { clear(); }
 
 private:
     T &search_from_head(const size_t index) const
