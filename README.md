@@ -39,6 +39,7 @@ Double Ended QUEue (deque) implementation using C++ programming language.
     - build unit tests
 
         ```bash
+        cmake -B ./build
         cmake --build ./build
         ```
 
