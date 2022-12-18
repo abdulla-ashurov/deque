@@ -659,6 +659,34 @@ TEST_CASE("test deque.pop_back function")
             REQUIRE(deque[i] == expected_values[i]);
     }
 
+    SECTION("should return expected values")
+    {
+        Deque<int> deque;
+        size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(i + 1);
+
+        for (size_t i = 0; i < size; i++)
+            deque.pop_back();
+
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("should return expected values")
+    {
+        Deque<std::string> deque;
+        size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(gen_random_str(10));
+
+        for (size_t i = 0; i < size; i++)
+            deque.pop_back();
+
+        REQUIRE(deque.empty());
+    }
+
     SECTION("should return exception")
     {
         Deque<int> deque;
