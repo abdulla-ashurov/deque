@@ -58,6 +58,19 @@ public:
         m_size--;
     }
 
+    void insert(const size_t pos, const T &value)
+    {
+        assert_m(full(), "array overflow");
+        assert_m(pos >= m_size, "index out of range");
+
+        T val(value);
+        for (size_t i = pos; i < m_size; i++)
+            std::swap(m_array[i], val);
+            
+        m_array[m_size] = val;
+        m_size++;
+    }
+
     void clear()
     {
         delete[] m_array;
