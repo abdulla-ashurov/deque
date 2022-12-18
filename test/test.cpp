@@ -134,6 +134,30 @@ TEST_CASE("test array.pop_front function")
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_values[expected_size - i - 1]);
     }
+
+    SECTION("should return expected values")
+    {
+        Array<int> array;
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.push_front(i + 1);
+
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.pop_front();
+
+        REQUIRE(array.empty());
+    }
+
+    SECTION("should return expected values")
+    {
+        Array<std::string> array;
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.push_front(gen_random_str(10));
+
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.pop_front();
+
+        REQUIRE(array.empty());
+    }
 }
 
 TEST_CASE("test array.pop_back function")
@@ -175,6 +199,30 @@ TEST_CASE("test array.pop_back function")
         REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_values[i]);
+    }
+
+    SECTION("should return expected values")
+    {
+        Array<int> array;
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.push_back(i + 1);
+
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.pop_back();
+
+        REQUIRE(array.empty());
+    }
+    
+    SECTION("should return expected values")
+    {
+        Array<std::string> array;
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.push_back(gen_random_str(10));
+
+        for (size_t i = 0; i < array.get_max_size(); i++)
+            array.pop_back();
+
+        REQUIRE(array.empty());
     }
 }
 
@@ -261,6 +309,61 @@ TEST_CASE("test array.insert function")
         }
 
         REQUIRE(array.size() == expected_size);
+        for (size_t i = 0; i < array.size(); i++)
+            REQUIRE(array[i] == expected_values[i]);
+    }
+}
+
+TEST_CASE("test array.erase function")
+{
+    SECTION("erase all values from begin of array")
+    {
+        Array<int> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(i + 1);
+        
+        for (size_t i = 0; i < array.size(); i++)
+            array.erase(0);
+
+        REQUIRE(array.empty());
+    }
+
+    SECTION("erase all values from end of array")
+    {
+        Array<int> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(i + 1);
+        
+        for (size_t i = 0; i < array.size(); i++)
+            array.erase(array.size() - 1);
+
+        REQUIRE(array.empty());
+    }
+
+    SECTION("erase values from middle of array")
+    {
+        Array<int> array;
+        const size_t size = array.get_max_size();
+
+        std::deque<int> expected_values;
+
+        for (size_t i = 0; i < size; i++)
+        {
+            array.push_back(i + 1);
+            expected_values.push_back(i + 1);
+        }
+
+        for (size_t i = 0; i < array.size() / 2; i++)
+        {
+            array.erase(array.size() / 2 - 1);
+            expected_values.erase(expected_values.begin() + expected_values.size() / 2 - 1);
+        }
+
+        REQUIRE(array.size() == expected_values.size());
         for (size_t i = 0; i < array.size(); i++)
             REQUIRE(array[i] == expected_values[i]);
     }
@@ -470,6 +573,34 @@ TEST_CASE("test deque.pop_front function")
         REQUIRE(deque.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(deque[i] == expected_values[size - i - count_of_rm_elements - 1]);
+    }
+
+    SECTION("should return expected values")
+    {
+        Deque<int> deque;
+        size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_front(i + 1);
+
+        for (size_t i = 0; i < size; i++)
+            deque.pop_front();
+
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("should return expected values")
+    {
+        Deque<std::string> deque;
+        size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_front(gen_random_str(10));
+
+        for (size_t i = 0; i < size; i++)
+            deque.pop_front();
+
+        REQUIRE(deque.empty());
     }
 
     SECTION("should return exception")
