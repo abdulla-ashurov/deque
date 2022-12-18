@@ -12,6 +12,7 @@ Double Ended QUEue (deque) implementation using C++ programming language.
 
 - `(constructor)` - construct deque container
 - `(destructor)` - destructor deque container
+- `(copy constructor)` - copy deque constructor
 
 ### Capacity
 
