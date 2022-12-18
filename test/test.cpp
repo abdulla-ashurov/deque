@@ -330,6 +330,20 @@ TEST_CASE("test array.erase function")
         REQUIRE(array.empty());
     }
 
+    SECTION("erase all values from begin of array")
+    {
+        Array<std::string> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(gen_random_str(10));
+        
+        for (size_t i = 0; i < size; i++)
+            array.erase(0);
+
+        REQUIRE(array.empty());
+    }
+
     SECTION("erase all values from end of array")
     {
         Array<int> array;
@@ -337,6 +351,20 @@ TEST_CASE("test array.erase function")
 
         for (size_t i = 0; i < size; i++)
             array.push_back(i + 1);
+        
+        for (size_t i = 0; i < size; i++)
+            array.erase(array.size() - 1);
+
+        REQUIRE(array.empty());
+    }
+
+    SECTION("erase all values from end of array")
+    {
+        Array<std::string> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(gen_random_str(10));
         
         for (size_t i = 0; i < size; i++)
             array.erase(array.size() - 1);
@@ -355,6 +383,31 @@ TEST_CASE("test array.erase function")
         {
             array.push_back(i + 1);
             expected_values.push_back(i + 1);
+        }
+
+        for (size_t i = 0; i < array.size() / 2; i++)
+        {
+            array.erase(array.size() / 2 - 1);
+            expected_values.erase(expected_values.begin() + expected_values.size() / 2 - 1);
+        }
+
+        REQUIRE(array.size() == expected_values.size());
+        for (size_t i = 0; i < array.size(); i++)
+            REQUIRE(array[i] == expected_values[i]);
+    }
+
+    SECTION("erase values from middle of array")
+    {
+        Array<std::string> array;
+        const size_t size = array.get_max_size();
+
+        std::deque<std::string> expected_values;
+
+        for (size_t i = 0; i < size; i++)
+        {
+            std::string value(gen_random_str(10));
+            array.push_back(value);
+            expected_values.push_back(value);
         }
 
         for (size_t i = 0; i < array.size() / 2; i++)
@@ -865,6 +918,20 @@ TEST_CASE("test deque.erase function")
         REQUIRE(deque.empty());
     }
 
+    SECTION("erase all values from begin of deque")
+    {
+        Deque<std::string> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(gen_random_str(10));
+
+        for (size_t i = 0; i < size; i++)
+            deque.erase(0);
+        
+        REQUIRE(deque.empty());
+    }
+
     SECTION("erase all values from end of deque")
     {
         Deque<int> deque;
@@ -872,6 +939,20 @@ TEST_CASE("test deque.erase function")
 
         for (size_t i = 0; i < size; i++)
             deque.push_back(i + 1);
+
+        for (size_t i = 0; i < size; i++)
+            deque.erase(deque.size() - 1);
+        
+        REQUIRE(deque.empty());
+    }
+
+    SECTION("erase all values from end of deque")
+    {
+        Deque<std::string> deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            deque.push_back(gen_random_str(10));
 
         for (size_t i = 0; i < size; i++)
             deque.erase(deque.size() - 1);
@@ -890,6 +971,33 @@ TEST_CASE("test deque.erase function")
         {
             deque.push_back(i + 1);
             expected_values.push_back(i + 1);
+        }
+
+        size_t middle_pos = deque.size() / 2 - 1;
+
+        for (size_t i = 0; i < size / 2; i++)
+        {
+            deque.erase(middle_pos);
+            expected_values.erase(expected_values.begin() + middle_pos);
+        }
+
+        REQUIRE(deque.size() == expected_values.size());
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
+    }
+
+    SECTION("erase values from middle of deque")
+    {
+        Deque<std::string> deque;
+        const size_t size = 10;
+
+        std::deque<std::string> expected_values;
+
+        for (size_t i = 0; i < size; i++)
+        {
+            std::string value(gen_random_str(10));
+            deque.push_back(value);
+            expected_values.push_back(value);
         }
 
         size_t middle_pos = deque.size() / 2 - 1;
