@@ -1,4 +1,4 @@
-name: CMake
+name: TESTS
 
 on:
   push:
