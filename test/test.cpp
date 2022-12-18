@@ -914,7 +914,7 @@ TEST_CASE("test deque.erase function")
 
         for (size_t i = 0; i < size; i++)
             deque.erase(0);
-        
+
         REQUIRE(deque.empty());
     }
 
@@ -928,7 +928,7 @@ TEST_CASE("test deque.erase function")
 
         for (size_t i = 0; i < size; i++)
             deque.erase(0);
-        
+
         REQUIRE(deque.empty());
     }
 
@@ -942,7 +942,7 @@ TEST_CASE("test deque.erase function")
 
         for (size_t i = 0; i < size; i++)
             deque.erase(deque.size() - 1);
-        
+
         REQUIRE(deque.empty());
     }
 
@@ -956,7 +956,7 @@ TEST_CASE("test deque.erase function")
 
         for (size_t i = 0; i < size; i++)
             deque.erase(deque.size() - 1);
-        
+
         REQUIRE(deque.empty());
     }
 
@@ -1023,7 +1023,7 @@ TEST_CASE("test deque.clear function")
 
         for (size_t i = 0; i < size; i++)
             deque.push_back(i + 1);
-        
+
         deque.clear();
         REQUIRE(deque.empty());
     }
@@ -1035,8 +1035,41 @@ TEST_CASE("test deque.clear function")
 
         for (size_t i = 0; i < size; i++)
             deque.push_back(gen_random_str(10));
-        
+
         deque.clear();
         REQUIRE(deque.empty());
+    }
+}
+
+TEST_CASE("test deque copy constructor")
+{
+    SECTION("should be same")
+    {
+        Deque<int> first_deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            first_deque.push_back(i + 1);
+
+        Deque<int> second_deque(first_deque);
+        
+        REQUIRE(first_deque.size() == second_deque.size());
+        for (size_t i = 0; i < size; i++)
+            REQUIRE(first_deque[i] == second_deque[i]);
+    }
+
+    SECTION("should be same")
+    {
+        Deque<std::string> first_deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            first_deque.push_back(gen_random_str(10));
+
+        Deque<std::string> second_deque(first_deque);
+        
+        REQUIRE(first_deque.size() == second_deque.size());
+        for (size_t i = 0; i < size; i++)
+            REQUIRE(first_deque[i] == second_deque[i]);
     }
 }
