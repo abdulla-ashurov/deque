@@ -9,6 +9,12 @@ class Deque
 public:
     Deque() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
 
+    Deque(const Deque &other) : Deque()
+    {
+        for (size_t i = 0; i < other.size(); i++)
+            push_back(other[i]);
+    }
+
     size_t size() const { return m_size; }
 
     bool empty() const { return m_size == 0; }
@@ -96,10 +102,10 @@ public:
 
                 for (size_t i = 0; i <= pos % Array<T>::get_max_size(); i++)
                     node->arr.push_back(current->arr[i]);
-                
+
                 for (size_t i = 0; i <= pos % Array<T>::get_max_size(); i++)
                     current->arr.pop_front();
-                
+
                 node->arr.insert(pos % Array<T>::get_max_size(), value);
             }
 
@@ -118,7 +124,7 @@ public:
             Node *current = reach_node(pos);
             if (current == nullptr)
                 throw std::runtime_error("invalid position for erasing value");
-            else if(current->arr.size() > 1)
+            else if (current->arr.size() > 1)
                 current->arr.erase(pos % Array<T>::get_max_size());
             else
             {
@@ -220,7 +226,7 @@ private:
     {
         if (is_faster_get_from_head(index))
             return reach_from_head(index);
-        
+
         return reach_from_tail(index);
     }
 
@@ -230,17 +236,17 @@ private:
         for (size_t i = 0; i < m_size; i += current->arr.size(), current = current->p_next)
             if (index >= i && index < i + current->arr.size())
                 return current;
-        
+
         return nullptr;
     }
 
     Node *reach_from_tail(const size_t index)
     {
-         Node *current = m_tail;
+        Node *current = m_tail;
         for (int i = m_size - 1; i >= 0; i -= current->arr.size(), current = current->p_prev)
             if (index <= i && index > i - current->arr.size())
                 return current;
-        
+
         return nullptr;
     }
 
