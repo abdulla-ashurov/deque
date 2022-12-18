@@ -71,6 +71,24 @@ public:
         m_size++;
     }
 
+    void erase(const size_t pos)
+    {
+        assert_m(empty(), "array is empty");
+        assert_m(pos >= m_size, "index out of range");
+        
+        if (pos == 0)
+            pop_front();
+        else if (pos == m_size - 1)
+            pop_back();
+        else
+        {
+            for (size_t i = pos; i < m_size - 1; i++)
+                std::swap(m_array[i], m_array[i + 1]);
+            
+            m_size--;
+        }
+    }
+
     void clear()
     {
         delete[] m_array;
