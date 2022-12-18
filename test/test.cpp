@@ -35,7 +35,7 @@ TEST_CASE("test array.push_front function")
     SECTION("should return expected values")
     {
         Array<int> array;
-        size_t expected_size = array.get_max_size();
+        const size_t expected_size = array.get_max_size();
 
         for (size_t i = 0; i < expected_size; i++)
             array.push_front(i + 1);
@@ -48,7 +48,7 @@ TEST_CASE("test array.push_front function")
     SECTION("should return expected values")
     {
         Array<std::string> array;
-        size_t expected_size = array.get_max_size();
+        const size_t expected_size = array.get_max_size();
 
         std::string expected_values[expected_size];
         init_str_array(expected_values, expected_size);
@@ -67,7 +67,7 @@ TEST_CASE("test array.push_back function")
     SECTION("should return expected values")
     {
         Array<int> array;
-        size_t expected_size = array.get_max_size();
+        const size_t expected_size = array.get_max_size();
 
         for (size_t i = 0; i < expected_size; i++)
             array.push_back(i + 1);
@@ -80,7 +80,7 @@ TEST_CASE("test array.push_back function")
     SECTION("should return expected values")
     {
         Array<std::string> array;
-        size_t expected_size = array.get_max_size();
+        const size_t expected_size = array.get_max_size();
 
         std::string expected_values[expected_size];
         init_str_array(expected_values, expected_size);
@@ -107,7 +107,7 @@ TEST_CASE("test array.pop_front function")
         for (size_t i = 0; i < 2; i++)
             array.pop_front();
 
-        size_t expected_size = 2;
+        const size_t expected_size = 2;
 
         REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
@@ -129,7 +129,7 @@ TEST_CASE("test array.pop_front function")
         for (size_t i = 0; i < 2; i++)
             array.pop_front();
 
-        size_t expected_size = 2;
+        const size_t expected_size = 2;
         REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_values[expected_size - i - 1]);
@@ -149,7 +149,7 @@ TEST_CASE("test array.pop_back function")
         for (size_t i = 0; i < 2; i++)
             array.pop_back();
 
-        size_t expected_size = 2;
+        const size_t expected_size = 2;
 
         REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
@@ -171,7 +171,7 @@ TEST_CASE("test array.pop_back function")
         for (size_t i = 0; i < 2; i++)
             array.pop_back();
 
-        size_t expected_size = 2;
+        const size_t expected_size = 2;
         REQUIRE(array.size() == expected_size);
         for (size_t i = 0; i < expected_size; i++)
             REQUIRE(array[i] == expected_values[i]);
@@ -186,7 +186,7 @@ TEST_CASE("test array.clear function")
         for (size_t i = 0; i < array.get_max_size(); i++)
             array.push_back(i + 1);
 
-        size_t expected_size = 0;
+        const size_t expected_size = 0;
         array.clear();
 
         REQUIRE(array.size() == expected_size);
@@ -202,6 +202,67 @@ TEST_CASE("test array.clear function")
         array.clear();
 
         REQUIRE(array.size() == expected_size);
+    }
+}
+
+TEST_CASE("test array.insert function")
+{
+    SECTION("insert values to middle of array")
+    {
+        Array<int> array;
+        const size_t expected_size = array.get_max_size();
+
+        std::deque<int> expected_values;
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            int value = rand() % 40;
+
+            array.push_back(value);
+            expected_values.push_back(value);
+        }
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            int value = rand() % 40;
+            std::deque<int>::const_iterator pos = expected_values.begin() + expected_size / 2 - 1;
+
+            array.insert(expected_size / 2 - 1, value);
+            expected_values.insert(pos, value);
+        }
+
+        REQUIRE(array.size() == expected_size);
+        for (size_t i = 0; i < array.size(); i++)
+            REQUIRE(array[i] == expected_values[i]);
+    }
+
+    SECTION("insert values to middle of deque")
+    {
+        Array<std::string> array;
+        const size_t expected_size = array.get_max_size();
+
+        std::deque<std::string> expected_values;
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            std::string value(gen_random_str(10));
+
+            array.push_back(value);
+            expected_values.push_back(value);
+        }
+
+        for (size_t i = 0; i < expected_size / 2; i++)
+        {
+            std::string value(gen_random_str(10));
+            std::deque<std::string>::const_iterator pos = expected_values.begin() + expected_size / 2 - 1;
+
+            array.insert(expected_size / 2 - 1, value);
+            expected_values.insert(pos, value);
+        }
+
+        REQUIRE(array.size() == expected_size);
+        for (size_t i = 0; i < array.size(); i++)
+            REQUIRE(array[i] == expected_values[i]);
     }
 }
 
@@ -324,19 +385,18 @@ TEST_CASE("test deque.push_back and push_front functions")
             deque.push_back(str);
             expected_values.push_back(str);
         }
-        
+
         for (size_t i = 0; i < expected_size / 2; i++)
         {
             std::string str(gen_random_str(str_length));
             deque.push_front(str);
             expected_values.push_front(str);
         }
-        
+
         REQUIRE(deque.size() == expected_size);
         std::list<std::string>::const_iterator it = expected_values.cbegin();
         for (size_t i = 0; i < expected_size || it != expected_values.cend(); i++, it++)
             REQUIRE(deque[i] == *it);
-
     }
 
     SECTION("should return expected values")
@@ -354,14 +414,14 @@ TEST_CASE("test deque.push_back and push_front functions")
             deque.push_front(str);
             expected_values.push_front(str);
         }
-        
+
         for (size_t i = 0; i < expected_size / 2; i++)
         {
             std::string str(gen_random_str(str_length));
             deque.push_back(str);
             expected_values.push_back(str);
         }
-        
+
         REQUIRE(deque.size() == expected_size);
         std::list<std::string>::const_iterator it = expected_values.cbegin();
         for (size_t i = 0; i < expected_size || it != expected_values.cend(); i++, it++)
@@ -400,11 +460,11 @@ TEST_CASE("test deque.pop_front function")
 
         for (size_t i = 0; i < size; i++)
             deque.push_front(expected_values[i]);
-        
+
         size_t count_of_rm_elements = 3;
         for (size_t i = 0; i < count_of_rm_elements; i++)
             deque.pop_front();
-        
+
         size_t expected_size = size - count_of_rm_elements;
 
         REQUIRE(deque.size() == expected_size);
@@ -456,11 +516,11 @@ TEST_CASE("test deque.pop_back function")
 
         for (size_t i = 0; i < size; i++)
             deque.push_back(expected_values[i]);
-        
+
         size_t count_of_rm_elements = 3;
         for (size_t i = 0; i < count_of_rm_elements; i++)
             deque.pop_back();
-        
+
         size_t expected_size = size - count_of_rm_elements;
 
         REQUIRE(deque.size() == expected_size);
@@ -547,7 +607,7 @@ TEST_CASE("test deque.insert function")
         std::string expected_values[expected_size];
         init_str_array(expected_values, expected_size);
 
-       for (size_t pos = 0; pos < expected_size; pos++)
+        for (size_t pos = 0; pos < expected_size; pos++)
             deque.insert(pos, expected_values[pos]);
 
         REQUIRE(deque.size() == expected_size);
@@ -573,7 +633,7 @@ TEST_CASE("test deque.insert function")
         for (size_t i = 0; i < expected_size / 2; i++)
         {
             int value = rand() % 40;
-            std::deque<int>::const_iterator pos = expected_values.begin() + 5;
+            std::deque<int>::const_iterator pos = expected_values.begin() + expected_size / 2;
 
             deque.insert(expected_size / 2, value);
             expected_values.insert(pos, value);
@@ -602,18 +662,22 @@ TEST_CASE("test deque.insert function")
         for (size_t i = 0; i < expected_size / 2; i++)
         {
             std::string value(gen_random_str(10));
-            std::deque<std::string>::const_iterator pos = expected_values.begin() + 5;
+            std::deque<std::string>::const_iterator pos = expected_values.begin() + expected_size / 2;
 
             deque.insert(expected_size / 2, value);
             expected_values.insert(pos, value);
         }
+
+        REQUIRE(deque.size() == expected_size);
+        for (size_t i = 0; i < deque.size(); i++)
+            REQUIRE(deque[i] == expected_values[i]);
     }
 
     SECTION("should return exception")
     {
         Deque<int> deque;
         size_t incorrect_pos = 3, value = 5;
-        
+
         REQUIRE_THROWS(deque.insert(incorrect_pos, value));
     }
 
@@ -621,7 +685,7 @@ TEST_CASE("test deque.insert function")
     {
         Deque<std::string> deque;
         size_t incorrect_pos = 3;
-        
+
         REQUIRE_THROWS(deque.insert(incorrect_pos, gen_random_str(10)));
     }
 }
