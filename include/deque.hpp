@@ -15,6 +15,14 @@ public:
             push_back(other[i]);
     }
 
+    Deque &operator=(const Deque &other)
+    {
+        for (size_t i = 0; i < other.size(); i++)
+            push_back(other[i]);
+        
+        return *this;
+    }
+
     size_t size() const { return m_size; }
 
     bool empty() const { return m_size == 0; }

@@ -1073,3 +1073,38 @@ TEST_CASE("test deque copy constructor")
             REQUIRE(first_deque[i] == second_deque[i]);
     }
 }
+
+TEST_CASE("test deque operator=")
+{
+    SECTION("should be same")
+    {
+        Deque<int> first_deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            first_deque.push_back(i + 1);
+
+        Deque<int> second_deque;
+        second_deque = first_deque;
+        
+        REQUIRE(first_deque.size() == second_deque.size());
+        for (size_t i = 0; i < size; i++)
+            REQUIRE(first_deque[i] == second_deque[i]);
+    }
+
+    SECTION("should be same")
+    {
+        Deque<std::string> first_deque;
+        const size_t size = 10;
+
+        for (size_t i = 0; i < size; i++)
+            first_deque.push_back(gen_random_str(10));
+
+        Deque<std::string> second_deque;
+        second_deque = first_deque;
+        
+        REQUIRE(first_deque.size() == second_deque.size());
+        for (size_t i = 0; i < size; i++)
+            REQUIRE(first_deque[i] == second_deque[i]);
+    }
+}
