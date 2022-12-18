@@ -422,6 +422,33 @@ TEST_CASE("test array.erase function")
     }
 }
 
+TEST_CASE("test array.clear function")
+{
+    SECTION("should be empty")
+    {
+        Array<int> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(i + 1);
+        
+        array.clear();
+        REQUIRE(array.empty());
+    }
+
+    SECTION("should be empty")
+    {
+        Array<std::string> array;
+        const size_t size = array.get_max_size();
+
+        for (size_t i = 0; i < size; i++)
+            array.push_back(gen_random_str(10));
+        
+        array.clear();
+        REQUIRE(array.empty());
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////// TEST CASES FOR TESTING DEQUE_HPP ///////////////////////
 ////////////////////////////////////////////////////////////////////////////
