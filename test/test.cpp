@@ -212,7 +212,7 @@ TEST_CASE("test array.pop_back function")
 
         REQUIRE(array.empty());
     }
-    
+
     SECTION("should return expected values")
     {
         Array<std::string> array;
@@ -323,7 +323,7 @@ TEST_CASE("test array.erase function")
 
         for (size_t i = 0; i < size; i++)
             array.push_back(i + 1);
-        
+
         for (size_t i = 0; i < size; i++)
             array.erase(0);
 
@@ -337,7 +337,7 @@ TEST_CASE("test array.erase function")
 
         for (size_t i = 0; i < size; i++)
             array.push_back(gen_random_str(10));
-        
+
         for (size_t i = 0; i < size; i++)
             array.erase(0);
 
@@ -351,7 +351,7 @@ TEST_CASE("test array.erase function")
 
         for (size_t i = 0; i < size; i++)
             array.push_back(i + 1);
-        
+
         for (size_t i = 0; i < size; i++)
             array.erase(array.size() - 1);
 
@@ -365,7 +365,7 @@ TEST_CASE("test array.erase function")
 
         for (size_t i = 0; i < size; i++)
             array.push_back(gen_random_str(10));
-        
+
         for (size_t i = 0; i < size; i++)
             array.erase(array.size() - 1);
 
@@ -419,33 +419,6 @@ TEST_CASE("test array.erase function")
         REQUIRE(array.size() == expected_values.size());
         for (size_t i = 0; i < array.size(); i++)
             REQUIRE(array[i] == expected_values[i]);
-    }
-}
-
-TEST_CASE("test array.clear function")
-{
-    SECTION("should be empty")
-    {
-        Array<int> array;
-        const size_t size = array.get_max_size();
-
-        for (size_t i = 0; i < size; i++)
-            array.push_back(i + 1);
-        
-        array.clear();
-        REQUIRE(array.empty());
-    }
-
-    SECTION("should be empty")
-    {
-        Array<std::string> array;
-        const size_t size = array.get_max_size();
-
-        for (size_t i = 0; i < size; i++)
-            array.push_back(gen_random_str(10));
-        
-        array.clear();
-        REQUIRE(array.empty());
     }
 }
 
