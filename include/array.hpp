@@ -18,7 +18,7 @@ public:
 
     size_t size() const { return m_size; }
 
-    static size_t get_max_size() { return max_size; }
+    static size_t max_size() { return max_size; }
 
     void push_front(const T &value)
     {

@@ -101,20 +101,20 @@ public:
             if (current == nullptr)
                 throw std::runtime_error("invalid position for inserting value");
             else if (!current->arr.full())
-                current->arr.insert(pos % Array<T>::get_max_size(), value);
+                current->arr.insert(pos % Array<T>::max_size(), value);
             else
             {
                 Node *p_prev = current->p_prev;
                 Node *node = new Node(p_prev, current);
                 current->p_prev = p_prev->p_next = node;
 
-                for (size_t i = 0; i <= pos % Array<T>::get_max_size(); i++)
+                for (size_t i = 0; i <= pos % Array<T>::max_size(); i++)
                     node->arr.push_back(current->arr[i]);
 
-                for (size_t i = 0; i <= pos % Array<T>::get_max_size(); i++)
+                for (size_t i = 0; i <= pos % Array<T>::max_size(); i++)
                     current->arr.pop_front();
 
-                node->arr.insert(pos % Array<T>::get_max_size(), value);
+                node->arr.insert(pos % Array<T>::max_size(), value);
             }
 
             m_size++;
@@ -133,7 +133,7 @@ public:
             if (current == nullptr)
                 throw std::runtime_error("invalid position for erasing value");
             else if (current->arr.size() > 1)
-                current->arr.erase(pos % Array<T>::get_max_size());
+                current->arr.erase(pos % Array<T>::max_size());
             else
             {
                 Node *p_prev = current->p_prev, *p_next = current->p_next;
@@ -210,7 +210,7 @@ private:
 
     bool is_faster_get_from_head(const size_t index) const
     {
-        return (index / Array<T>::get_max_size()) < (m_size / Array<T>::get_max_size());
+        return (index / Array<T>::max_size()) < (m_size / Array<T>::max_size());
     }
 
     class Node
