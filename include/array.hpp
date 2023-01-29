@@ -1,5 +1,5 @@
-#ifndef ARRAY_HPP
-#define ARRAY_HPP
+#ifndef __ARRAY_HPP__
+#define __ARRAY_HPP__
 
 #include <cassert>
 

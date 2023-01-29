@@ -1,5 +1,5 @@
-#ifndef DEQUE_HPP
-#define DEQUE_HPP
+#ifndef __DEQUE_HPP__
+#define __DEQUE_HPP__
 
 #include "array.hpp"
 
