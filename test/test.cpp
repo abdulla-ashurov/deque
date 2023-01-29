@@ -21,10 +21,10 @@ std::string gen_random_str(size_t len)
     return s;
 }
 
-void init_str_array(std::deque<std::string> &array, size_t size)
+void init_str_array(std::deque<std::string> &deq, size_t size)
 {
     for (size_t i = 0; i < size; i++)
-        array[i] = gen_random_str(10);
+        deq.push_back(gen_random_str(10));
 }
 
 ////////////////////////////////////////////////////////////////////////////
