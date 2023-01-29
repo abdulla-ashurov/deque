@@ -6,7 +6,7 @@ Double Ended QUEue (deque) implementation using C++ programming language.
 
 `deque` (usually pronounced like `"deck"`) is an irregular acronym of double-ended queue. Double-ended queues are sequence containers with dynamic sizes that can be expanded or contracted on both ends (either its front or its back).
 
-`deque` in our library is implemented such as `linked list`, where element of `linked list` is `dynamic array`.
+`deque` in our library is implemented such as `linked list`, where element of `linked list` is `static vector`.
 
 ## Member functions
 
