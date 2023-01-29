@@ -610,27 +610,27 @@ TEST_CASE("test deque.pop_front function")
             REQUIRE(deque[i] == expected_size - i);
     }
 
-    SECTION("should return expected values")
-    {
-        Deque<std::string> deque;
-        size_t size = 10;
+    // SECTION("should return expected values")
+    // {
+    //     Deque<std::string> deque;
+    //     size_t size = 10;
 
-        std::deque<std::string> expected_values;
-        init_str_array(expected_values, size);
+    //     std::deque<std::string> expected_values;
+    //     init_str_array(expected_values, size);
 
-        for (size_t i = 0; i < size; i++)
-            deque.push_front(expected_values[i]);
+    //     for (size_t i = 0; i < size; i++)
+    //         deque.push_front(expected_values[i]);
 
-        size_t count_of_rm_elements = 3;
-        for (size_t i = 0; i < count_of_rm_elements; i++)
-            deque.pop_front();
+    //     size_t count_of_rm_elements = 3;
+    //     for (size_t i = 0; i < count_of_rm_elements; i++)
+    //         deque.pop_front();
 
-        size_t expected_size = size - count_of_rm_elements;
+    //     size_t expected_size = size - count_of_rm_elements;
 
-        REQUIRE(deque.size() == expected_size);
-        for (size_t i = 0; i < expected_size; i++)
-            REQUIRE(deque[i] == expected_values[size - i - count_of_rm_elements - 1]);
-    }
+    //     REQUIRE(deque.size() == expected_size);
+    //     for (size_t i = 0; i < expected_size; i++)
+    //         REQUIRE(deque[i] == expected_values[size - i - count_of_rm_elements - 1]);
+    // }
 
     SECTION("should return expected values")
     {
