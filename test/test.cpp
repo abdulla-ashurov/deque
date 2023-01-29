@@ -4,7 +4,6 @@
 #include <random>
 #include "catch_amalgamated.hpp"
 #include "../include/deque.hpp"
-#include "../include/static-vector.hpp"
 
 std::string gen_random_str(size_t len)
 {
