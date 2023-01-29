@@ -32,5 +32,5 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
-      run: ${{github.workspace}}/build/UNIT_TESTS
+      run: ./UNIT_TESTS
 
