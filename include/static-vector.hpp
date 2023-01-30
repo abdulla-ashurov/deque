@@ -48,7 +48,7 @@ public:
         for (size_t i = 0; i < m_size - 1; i++)
             std::swap(*m_array.get(i), *m_array.get(i + 1));
         
-        new(m_array.get(m_size - 1)) T();
+        m_array.get(m_size - 1)->~T();
         m_size--;
     }
 
@@ -56,7 +56,7 @@ public:
     {
         assert_m(empty(), "static_vector is empty");
         
-        new(m_array.get(m_size - 1)) T();
+        m_array.get(m_size - 1)->~T();
         m_size--;
     }
 
@@ -92,6 +92,7 @@ public:
             for (size_t i = pos; i < m_size - 1; i++)
                 std::swap(*m_array.get(i), *m_array.get(i + 1));
             
+            m_array.get(m_size - 1)->~T();
             m_size--;
         }
     }
