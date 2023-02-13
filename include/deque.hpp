@@ -177,8 +177,6 @@ private:
         {
             arr.push_back(value);
         }
-
-        Node(Node *p_prev, Node *p_next) : p_prev{p_prev}, p_next{p_next} {}
     };
 
     Node *reach_node(const size_t index)
