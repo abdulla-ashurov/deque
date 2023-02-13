@@ -21,11 +21,6 @@ public:
     {
         return begin() + Size;
     }
-
-    inline T *get(const size_t index)
-    {
-        return begin() + index;
-    }
 };
 
 #endif
