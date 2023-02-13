@@ -104,7 +104,7 @@ TEST_CASE("test ArrayDeque.pop_front() function")
         for (size_t i = 0; i < ArrayDeque<int>::max_size(); i++)
             array.push_front(i + 1);
 
-        REQUIRE(array.size() == static_vector<int>::max_size());
+        REQUIRE(array.size() == ArrayDeque<int>::max_size());
 
         for (size_t i = 0; i < 2; i++)
             array.pop_front();

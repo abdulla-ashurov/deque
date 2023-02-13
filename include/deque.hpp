@@ -1,7 +1,7 @@
 #ifndef __DEQUE_HPP__
 #define __DEQUE_HPP__
 
-#include "static-vector.hpp"
+#include "array-deque.hpp"
 
 template <class T>
 class Deque
@@ -17,21 +17,18 @@ public:
 
     Deque &operator=(const Deque &other)
     {
-        for (size_t i = 0; i < other.size(); i++)
-            push_back(other[i]);
+        if (this != &other)
+            for (size_t i = 0; i < other.size(); i++)
+                push_back(other[i]);
         
         return *this;
     }
-
-    size_t size() const { return m_size; }
-
-    bool empty() const { return m_size == 0; }
 
     void push_front(const T &value)
     {
         if (empty())
             m_head = m_tail = new Node(value, nullptr, nullptr);
-        else if (!m_head->arr.full())
+        else if (!m_head->arr.full() && m_head->arr.allow_push_front())
             m_head->arr.push_front(value);
         else
             m_head = m_head->p_prev = new Node(value, nullptr, m_head);
@@ -43,7 +40,7 @@ public:
     {
         if (empty())
             m_head = m_tail = new Node(value, nullptr, nullptr);
-        else if (!m_tail->arr.full())
+        else if (!m_tail->arr.full() && m_tail->arr.allow_push_back())
             m_tail->arr.push_back(value);
         else
             m_tail = m_tail->p_next = new Node(value, m_tail, nullptr);
@@ -91,7 +88,7 @@ public:
 
     void clear()
     {
-        for (int i = m_size - 1; i >= 0; i--)
+        while(!empty())
             pop_back();
     }
 
@@ -127,7 +124,20 @@ public:
         return operator[](index);
     }
 
-    ~Deque() { clear(); }
+    size_t size() const 
+    { 
+        return m_size; 
+    }
+
+    bool empty() const 
+    { 
+        return m_size == 0; 
+    }
+
+    ~Deque() 
+    { 
+        clear(); 
+    }
 
 private:
     T &search_from_head(const size_t index) const
@@ -152,14 +162,15 @@ private:
 
     bool is_faster_get_from_head(const size_t index) const
     {
-        return (index / static_vector<T>::max_size()) < (m_size / static_vector<T>::max_size());
+        return (index / ArrayDeque<T>::max_size()) < (m_size / ArrayDeque<T>::max_size());
     }
 
     class Node
     {
     public:
-        static_vector<T> arr;
-        Node *p_prev, *p_next;
+        ArrayDeque<T> arr;
+        Node *p_prev;
+        Node *p_next;
 
         Node(const T &value, Node *p_prev, Node *p_next)
             : p_prev{p_prev}, p_next{p_next}
