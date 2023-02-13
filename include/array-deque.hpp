@@ -8,13 +8,6 @@
 template <class T>
 class ArrayDeque
 {
-private:
-    const static size_t M_MAX_SIZE = 4;
-    AlignedStorage<T, M_MAX_SIZE> m_array;
-    bool allow_push_from_front = false;
-    T *begin = nullptr;
-    T *end = nullptr;
-
 public:
     ArrayDeque() = default;
 
@@ -39,26 +32,16 @@ public:
         return *this;
     }
 
-    T &operator[](const size_t index)
-    {
-        return *(begin + index);
-    }
-
-    const T &operator[](const size_t index) const
-    {
-        return *(begin + index);
-    }
-
     template <typename V>
     void push_front(const V &value)
     {
         m_assert(full(), "Array is full");
         if (empty()) {
-            allow_push_from_front = true;
+            front = true;
             begin = end = m_array.end();
         }
 
-        m_assert(!allow_push_from_front, "Please create a new object of ArrayDeque for pushing elements to front");
+        m_assert(!allow_push_front(), "Please create a new object of ArrayDeque for pushing elements to front");
         new (--begin) T(value);
     }
 
@@ -69,7 +52,7 @@ public:
         if (empty())
             end = begin = m_array.begin();
 
-        m_assert(allow_push_from_front, "Please create a new object of ArrayDeque for pushing elements to back");
+        m_assert(!allow_push_back(), "Please create a new object of ArrayDeque for pushing elements to back");
         new (end++) T(value);
     }
 
@@ -95,6 +78,16 @@ public:
             pop_front();
     }
 
+    T &operator[](const size_t index)
+    {
+        return *(begin + index);
+    }
+
+    const T &operator[](const size_t index) const
+    {
+        return *(begin + index);
+    }
+
     static size_t max_size()
     {
         return M_MAX_SIZE;
@@ -115,10 +108,27 @@ public:
         return end - begin == M_MAX_SIZE;
     }
 
+    bool allow_push_front() const
+    {
+        return front;
+    }
+
+    bool allow_push_back() const
+    {
+        return !front;
+    }
+
     ~ArrayDeque()
     {
         clear();
     }
+
+private:
+    const static size_t M_MAX_SIZE = 4;
+    AlignedStorage<T, M_MAX_SIZE> m_array;
+    bool front = false;
+    T *begin = nullptr;
+    T *end = nullptr;
 };
 
 #endif
