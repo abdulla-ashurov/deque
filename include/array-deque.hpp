@@ -74,7 +74,7 @@ public:
 
     void clear()
     {
-        while (size() != 0)
+        while (!empty())
             pop_front();
     }
 
