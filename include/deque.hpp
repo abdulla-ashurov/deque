@@ -89,64 +89,6 @@ public:
         m_size--;
     }
 
-    void insert(const size_t pos, const T &value)
-    {
-        if (pos == 0)
-            push_front(value);
-        else if (pos == m_size)
-            push_back(value);
-        else
-        {
-            Node *current = reach_node(pos);
-            if (current == nullptr)
-                throw std::runtime_error("invalid position for inserting value");
-            else if (!current->arr.full())
-                current->arr.insert(pos % static_vector<T>::max_size(), value);
-            else
-            {
-                Node *p_prev = current->p_prev;
-                Node *node = new Node(p_prev, current);
-                current->p_prev = p_prev->p_next = node;
-
-                for (size_t i = 0; i <= pos % static_vector<T>::max_size(); i++)
-                    node->arr.push_back(current->arr[i]);
-
-                for (size_t i = 0; i <= pos % static_vector<T>::max_size(); i++)
-                    current->arr.pop_front();
-
-                node->arr.insert(pos % static_vector<T>::max_size(), value);
-            }
-
-            m_size++;
-        }
-    }
-
-    void erase(const size_t pos)
-    {
-        if (pos == 0)
-            pop_front();
-        else if (pos == m_size - 1)
-            pop_back();
-        else
-        {
-            Node *current = reach_node(pos);
-            if (current == nullptr)
-                throw std::runtime_error("invalid position for erasing value");
-            else if (current->arr.size() > 1)
-                current->arr.erase(pos % static_vector<T>::max_size());
-            else
-            {
-                Node *p_prev = current->p_prev, *p_next = current->p_next;
-                p_prev->p_next = p_next;
-                p_next->p_prev = p_prev;
-
-                delete current;
-            }
-
-            m_size--;
-        }
-    }
-
     void clear()
     {
         for (int i = m_size - 1; i >= 0; i--)
