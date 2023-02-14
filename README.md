@@ -1,3 +1,5 @@
+[![Test](https://github.com/abdulla-ashurov/deque/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/abdulla-ashurov/deque/actions/workflows/test.yml)
+
 # DEQUE
 
 Double Ended QUEue (deque) implementation using C++ programming language.
