@@ -34,3 +34,6 @@
 # VSCode folders
 .vscode/
 build/
+
+# Report files
+*.log

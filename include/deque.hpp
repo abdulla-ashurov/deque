@@ -17,6 +17,8 @@ public:
 
     Deque &operator=(const Deque &other)
     {
+        this->clear();
+
         if (this != &other)
             for (size_t i = 0; i < other.size(); i++)
                 push_back(other[i]);
@@ -28,7 +30,7 @@ public:
     {
         if (empty())
             m_head = m_tail = new Node(value, nullptr, nullptr);
-        else if (!m_head->arr.full() && m_head->arr.allow_push_front())
+        else if (!m_head->arr.full() && m_head->arr.is_allowed_push_front())
             m_head->arr.push_front(value);
         else
             m_head = m_head->p_prev = new Node(value, nullptr, m_head);
@@ -40,7 +42,7 @@ public:
     {
         if (empty())
             m_head = m_tail = new Node(value, nullptr, nullptr);
-        else if (!m_tail->arr.full() && m_tail->arr.allow_push_back())
+        else if (!m_tail->arr.full() && m_tail->arr.is_allowed_push_back())
             m_tail->arr.push_back(value);
         else
             m_tail = m_tail->p_next = new Node(value, m_tail, nullptr);
@@ -153,9 +155,9 @@ private:
     T &search_from_tail(const size_t index) const
     {
         Node *current = m_tail;
-        for (int i = m_size - 1; i >= 0; i -= current->arr.size(), current = current->p_prev)
-            if (index <= i && index > i - current->arr.size())
-                return current->arr[index - (i - current->arr.size()) - 1];
+        for (size_t i = m_size; i > 0; i -= current->arr.size(), current = current->p_prev)
+            if (index <= (i - 1) && index > (i - current->arr.size() - 1))
+                return current->arr[index - (i - current->arr.size() - 1) - 1];
 
         throw std::invalid_argument("index not found");
     }

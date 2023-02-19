@@ -25,6 +25,8 @@ public:
 
     ArrayDeque &operator=(const ArrayDeque &other)
     {
+        clear();
+
         if (this != &other)
             for (size_t i = 0; i < other.size(); i++)
                 push_back(other[i]);
@@ -36,12 +38,9 @@ public:
     void push_front(const V &value)
     {
         m_assert(full(), "Array is full");
-        if (empty()) {
-            front = true;
-            begin = end = m_array.end();
-        }
+        init_on_empty(true);
 
-        m_assert(!allow_push_front(), "Please create a new object of ArrayDeque for pushing elements to front");
+        m_assert(!is_allowed_push_front(), "Please create a new object of ArrayDeque for pushing elements to front");
         new (--begin) T(value);
     }
 
@@ -49,10 +48,9 @@ public:
     void push_back(const V &value)
     {
         m_assert(full(), "Array is full");
-        if (empty())
-            end = begin = m_array.begin();
+        init_on_empty(false);
 
-        m_assert(!allow_push_back(), "Please create a new object of ArrayDeque for pushing elements to back");
+        m_assert(!is_allowed_push_back(), "Please create a new object of ArrayDeque for pushing elements to back");
         new (end++) T(value);
     }
 
@@ -68,14 +66,14 @@ public:
     {
         m_assert(empty(), "Array is empty");
 
+        (end-1)->~T();
         end--;
-        end->~T();
     }
 
     void clear()
     {
         while (!empty())
-            pop_front();
+            pop_back();
     }
 
     T &operator[](const size_t index)
@@ -100,22 +98,34 @@ public:
 
     bool empty() const
     {
-        return end - begin == 0;
+        return size() == 0;
     }
 
     bool full() const
     {
-        return end - begin == M_MAX_SIZE;
+        return size() == M_MAX_SIZE;
     }
 
-    bool allow_push_front() const
+    bool is_allowed_push_front() const
     {
-        return front;
+        return allow_push_front;
     }
 
-    bool allow_push_back() const
+    bool is_allowed_push_back() const
     {
-        return !front;
+        return !allow_push_front;
+    }
+
+    void init_on_empty(bool allow_push_front)
+    {
+        if (empty()) {
+            if (allow_push_front)
+                begin = end = m_array.end();
+            else
+                end = begin = m_array.begin();
+
+            this->allow_push_front = allow_push_front;
+        }
     }
 
     ~ArrayDeque()
@@ -126,7 +136,9 @@ public:
 private:
     const static size_t M_MAX_SIZE = 4;
     AlignedStorage<T, M_MAX_SIZE> m_array;
-    bool front = false;
+
+    // add comments why we need this member
+    bool allow_push_front = false;
     T *begin = nullptr;
     T *end = nullptr;
 };

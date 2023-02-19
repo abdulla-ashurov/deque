@@ -315,7 +315,7 @@ TEST_CASE("test ArrayDeque operator=")
     SECTION("should return expected values")
     {
         ArrayDeque<int> array1({1, 2, 3, 4});
-        ArrayDeque<int> array2;
+        ArrayDeque<int> array2({5, 6});
         array2 = array1;
 
         REQUIRE(array1.size() == array2.size());
@@ -329,7 +329,7 @@ TEST_CASE("test ArrayDeque operator=")
         init_str_array(values, ArrayDeque<std::string>::max_size());
 
         ArrayDeque<std::string> array1({values[0], values[1], values[2], values[3]});
-        ArrayDeque<std::string> array2;
+        ArrayDeque<std::string> array2({gen_random_str(10), gen_random_str(10)});
         array2 = array1;
 
         REQUIRE(array1.size() == array2.size());
@@ -713,6 +713,9 @@ TEST_CASE("test deque operator=")
             first_deque.push_back(i + 1);
 
         Deque<int> second_deque;
+        for (size_t i = 0; i < 5; i++)
+            second_deque.push_back(i + 1);
+
         second_deque = first_deque;
 
         REQUIRE(first_deque.size() == second_deque.size());
@@ -729,6 +732,9 @@ TEST_CASE("test deque operator=")
             first_deque.push_back(gen_random_str(10));
 
         Deque<std::string> second_deque;
+        for (size_t i = 0; i < 5; i++)
+            second_deque.push_back(gen_random_str(10));
+
         second_deque = first_deque;
 
         REQUIRE(first_deque.size() == second_deque.size());
