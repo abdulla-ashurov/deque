@@ -148,8 +148,6 @@ private:
         for (size_t i = 0; i < m_size; i += current->arr.size(), current = current->p_next)
             if (index >= i && index < i + current->arr.size())
                 return current->arr[index - i];
-
-        throw std::invalid_argument("index not found");
     }
 
     T &search_from_tail(const size_t index) const
@@ -158,8 +156,6 @@ private:
         for (size_t i = m_size; i > 0; i -= current->arr.size(), current = current->p_prev)
             if (index <= (i - 1) && index > (i - current->arr.size() - 1))
                 return current->arr[index - (i - current->arr.size() - 1) - 1];
-
-        throw std::invalid_argument("index not found");
     }
 
     bool is_faster_get_from_head(const size_t index) const
