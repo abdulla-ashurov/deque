@@ -86,5 +86,13 @@ void push_back(const V &value)
 }
 ```
 
+```cpp
+~ArrayDeque()
+{
+  // Add implementation of pop_back() to there instead of calling pop_back() in loop in clear()
+  clear(); // Problem #4
+}
+```
+
 > Note: Benchmark test [there](https://quick-bench.com/q/oWCR26KOhl2cueJXEqH2q_bPdGg).
 
