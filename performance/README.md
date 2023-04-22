@@ -75,13 +75,14 @@ Below picture we see our implementation of `ArrayDeque` is too slower than other
 template <typename V>
 void push_back(const V &value)
 {
+    // m_assert macros should be use only in debug mode. Currently we don't support it.
     // assert calls method `full()` for checking Array is full or not.
-    m_assert(full(), "Array is full"); // Problem #1
+    m_assert(full(), "Array is full"); // Problem #1, Problem #2
 
     // This function too calls every time when call method push_back().
-    init_on_empty(false); // Problem #2
+    init_on_empty(false); // Problem #3
 
-    m_assert(!is_allowed_push_back(), "Please create a new object of ArrayDeque for pushing elements to back"); // Problem #3
+    m_assert(!is_allowed_push_back(), "Please create a new object of ArrayDeque for pushing elements to back"); // Problem #4
     new (end++) T(value);
 }
 ```
@@ -90,7 +91,7 @@ void push_back(const V &value)
 ~ArrayDeque()
 {
   // Add implementation of pop_back() to there instead of calling pop_back() in loop in clear()
-  clear(); // Problem #4
+  clear(); // Problem #5
 }
 ```
 
